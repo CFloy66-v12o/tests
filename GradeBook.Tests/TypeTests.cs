@@ -40,6 +40,7 @@ namespace GradeBook.Tests
              string name = "Chris";
              var upper = MakeUpperCase(name);
              Assert.Equal("Chris", name);
+             Assert.Equal("CHRIS", upper);//what you're expecting vs what you're code returns
         }
 
         private string MakeUpperCase(string parameter)
