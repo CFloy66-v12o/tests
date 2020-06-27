@@ -4,21 +4,34 @@ namespace GradeBook.Tests
 {
     public delegate string WriteLogDelegate(string logmessage);
     public delegate int MultiplyNumbersDelegate(int number1, int number2);
+   
     
     public class TypeTests
     {
+        int count = 0;
+
         [Fact]
         public void MultiplyingRandomNumbersDelegate()
         {
-            MultiplyNumbersDelegate bignumber;
-            bignumber = Numbers;
+            MultiplyNumbersDelegate  numbersoutput = Numbers;
+            numbersoutput += Numbers;
+            numbersoutput += NumbersCount;
+            var result = numbersoutput(15, 25);
+            
+            Assert.Equal(3, count);
+        }
 
-            var result = bignumber(15, 25);
-            Assert.Equal(375, result);
+        int NumbersCount(int number1, int number2)
+        {
+            count++;
+            var x = 15;
+            var y = 25;
+            return x * y;
         }
         
         int Numbers(int number1, int number2)
         {
+            count++;
             var x = 15;
             var y = 25;
             return x * y;
