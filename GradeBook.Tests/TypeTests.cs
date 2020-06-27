@@ -2,8 +2,46 @@ using Xunit;
 
 namespace GradeBook.Tests
 {
+    public delegate string WriteLogDelegate(string logmessage);
+    public delegate int MultiplyNumbersDelegate(int number1, int number2);
+    
     public class TypeTests
     {
+        [Fact]
+        public void MultiplyingRandomNumbersDelegate()
+        {
+            MultiplyNumbersDelegate bignumber;
+            bignumber = Numbers;
+
+            var result = bignumber(15, 25);
+            Assert.Equal(375, result);
+        }
+        
+        int Numbers(int number1, int number2)
+        {
+            var x = 15;
+            var y = 25;
+            return x * y;
+        }
+        
+
+        [Fact]
+        public void WriteLogDelegateCanPointToMethod()
+        {
+            WriteLogDelegate  log;
+
+            log = ReturnMessage;
+
+            var result = log("Hello!");
+            Assert.Equal("Hello!", result);
+        }
+
+        string ReturnMessage(string message)
+        {
+            return message;
+        }
+
+
         [Fact]
         public void Test1()
         {
@@ -28,7 +66,7 @@ namespace GradeBook.Tests
         {
             //arrange- data to be acted on
          var book1 = GetBook("Book 1");
-         GetBookSetName(out book1, "New Name");
+         GetBookSetName(ref book1, "New Name");
 
          Assert.Equal("New Name", book1._name);
         
@@ -40,7 +78,7 @@ namespace GradeBook.Tests
              string name = "Chris";
              var upper = MakeUpperCase(name);
              Assert.Equal("Chris", name);
-             Assert.Equal("CHRIS", upper);//what you're expecting vs what you're code returns
+             Assert.Equal("CHRIS", upper);//what you're expecting, vs what your code returns
         }
 
         private string MakeUpperCase(string parameter)
@@ -48,7 +86,7 @@ namespace GradeBook.Tests
            return parameter.ToUpper();
         }
 
-        private void GetBookSetName(out Book book, string name)
+        private void GetBookSetName(ref Book book, string name)
         {
             book = new Book(name);
         }
